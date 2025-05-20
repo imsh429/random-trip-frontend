@@ -31,7 +31,7 @@ const LoginRedirect: React.FC = () => {
           localStorage.setItem('refreshToken', refreshToken);
           setAuth({ isLoggedIn: true, nickname });
 
-          navigate('/');
+          navigate('/dashboard');
         } catch (err) {
           if (axios.isAxiosError(err)) {
             console.error('Axios Error:', err.message);
