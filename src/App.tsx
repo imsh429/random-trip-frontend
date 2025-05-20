@@ -12,7 +12,7 @@ const App: React.FC = () => {
       <Router>
         <Routes>
           <Route path="/" element={<LoginButton />} />
-          <Route path="/login-redirect" element={<LoginRedirect />} />
+          <Route path="/oauth/callback/kakao" element={<LoginRedirect />} />
           {/* 추가 라우팅은 여기에 */}
         </Routes>
       </Router>

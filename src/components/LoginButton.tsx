@@ -1,8 +1,8 @@
 // 카카오 로그인 버튼 ui, 리디렉션
 import React from 'react';
 
-const KAKAO_CLIENT_ID = 'ee981479b8571072d73c73fc2ca435b9'; // 👉 반드시 실제 키로 교체
-const REDIRECT_URI = 'http://localhost:5173/login-redirect'; // 프론트엔드 redirect 경로
+const KAKAO_CLIENT_ID = 'ee981479b8571072d73c73fc2ca435b9';
+const REDIRECT_URI = 'http://localhost:5173/oauth/callback/kakao'; // 프론트엔드 redirect 경로
 
 const LoginButton: React.FC = () => {
   const handleLogin = () => {

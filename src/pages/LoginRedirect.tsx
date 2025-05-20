@@ -14,32 +14,38 @@ const LoginRedirect: React.FC = () => {
     const url = new URL(window.location.href);
     const code = url.searchParams.get('code');
 
-    const getTokens = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8080/auth/kakao/callback?code=${code}`, {
-          withCredentials: true,
-        });
+    const used = sessionStorage.getItem("used_code");
 
-        const { accessToken, refreshToken, nickname } = res.data;
+    if (code && !used) {
+      sessionStorage.setItem("used_code", "true");
 
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-        setAuth({ isLoggedIn: true, nickname });
+      const getTokens = async (code: string) => {
+        try {
+          const res = await axios.get(`http://localhost:8080/oauth/callback/kakao?code=${code}`, {
+            withCredentials: true,
+          });
 
-        navigate('/'); // 로그인 후 홈으로 이동
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
+          const { accessToken, refreshToken, nickname } = res.data;
+
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+          setAuth({ isLoggedIn: true, nickname });
+
+          navigate('/');
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
             console.error('Axios Error:', err.message);
             console.error('Status:', err.response?.status);
             console.error('Response:', err.response?.data);
-        } else {
+          } else {
             console.error('기타 에러:', err);
+          }
+          navigate('/login-failed');
         }
-        navigate('/login-failed'); // 실패 시 경로
-      }
-    };
+      };
 
-    if (code) getTokens();
+      getTokens(code); // ✅ 여기에 정확하게 전달
+    }
   }, [navigate, setAuth]);
 
   return (
