@@ -7,6 +7,7 @@ import LoginButton from './components/LoginButton';
 import LoginRedirect from './pages/LoginRedirect';
 import Dashboard from './pages/Dashboard'; // ✅ 메인 대시보드
 import RandomTripPage from './pages/RandomTripPage'; // ✅ 여행지 추천 페이지
+import RandomTripPlanPage from './pages/RandomTripPlanPage'; // ✅ 여행지 추천 페이지
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
           <Route path="/oauth/callback/kakao" element={<LoginRedirect />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/trip/random" element={<RandomTripPage />} />
+          <Route path="/trip/plan" element={<RandomTripPlanPage />} />
         </Routes>
       </Router>
     </RecoilRoot>
