@@ -1,0 +1,45 @@
+name: Frontend Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies and build
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
+      - name: Upload build to server via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.JCLOUD_HOST }}
+          username: ubuntu
+          key: ${{ secrets.JCLOUD_SSH_KEY }}
+          port: 19072
+          source: "frontend/dist/*"
+          target: "/home/ubuntu/frontend/dist/"
+
+      - name: Restart frontend server (optional)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.JCLOUD_HOST }}
+          username: ubuntu
+          key: ${{ secrets.JCLOUD_SSH_KEY }}
+          port: 19072
+          script: |
+            sudo systemctl restart nginx
