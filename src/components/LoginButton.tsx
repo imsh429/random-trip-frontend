@@ -4,6 +4,9 @@ import React from 'react';
 const KAKAO_CLIENT_ID = 'ee981479b8571072d73c73fc2ca435b9';
 const REDIRECT_URI = 'http://localhost:5173/oauth/callback/kakao'; // 프론트엔드 redirect 경로
 
+const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
+const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+
 const LoginButton: React.FC = () => {
   const handleLogin = () => {
     const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;

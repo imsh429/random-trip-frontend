@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
-const NAVER_CLIENT_ID = '89ln81vmvy';
-const NAVER_CLIENT_SECRET = 'PIq6mSyZKBn3FETPrmtPd5MsT0kT0EOrnEJWTrTd';
+const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
+const NAVER_CLIENT_SECRET = import.meta.env.VITE_NAVER_CLIENT_SECRET;
 
 type TripSpot = {
   name: string;
