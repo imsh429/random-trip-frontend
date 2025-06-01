@@ -1,6 +1,8 @@
-// src/pages/RandomTripPage.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import DashboardHeader from '../components/dashboard/DashboardHeader';
+import RandomTripButton from '../components/randomTrip/RandomTripButton';
+import TripResultCard from '../components/randomTrip/TripResultCard';
 
 type TripInfo = {
   korName: string;
@@ -16,7 +18,7 @@ const RandomTripPage: React.FC = () => {
   const handleStartTrip = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:8080/trip/random");
+      const res = await axios.get("http://113.198.66.75:10072/trip/random");
       setTripInfo(res.data);
     } catch (err) {
       console.error("❌ 여행지 요청 실패:", err);
@@ -27,23 +29,33 @@ const RandomTripPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 text-center">
-      <h1 className="text-2xl font-bold mb-4">랜덤 여행지 뽑기</h1>
-      <button
-        onClick={handleStartTrip}
-        className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded"
-      >
-        {loading ? "추천 중..." : "여행지 추천 받기"}
-      </button>
+    <div className="min-h-screen w-screen bg-gradient-to-br from-[#fdfbfb] to-[#ebedee] font-['Nunito']">
+      <DashboardHeader />
 
-      {tripInfo && (
-        <div className="mt-6 p-4 border rounded shadow bg-white">
-          <h2 className="text-xl font-semibold mb-2">{tripInfo.korName}</h2>
-          <p>영문명: {tripInfo.engName}</p>
-          <p>위도: {tripInfo.latitude}</p>
-          <p>경도: {tripInfo.longitude}</p>
+      {/* 헤더 때문에 패딩 확보 */}
+      <div className="pt-36 flex justify-center px-6">
+        <div className="w-[90%] max-w-[1000px] flex flex-col items-center">
+
+          {/* 타이틀 */}
+          <h1 className="text-5xl font-black mb-16 text-gray-900 drop-shadow-sm">
+            여행지부터 정해주는 여행플래너
+          </h1>
+
+          {/* 버튼 카드 */}
+          <div className="bg-white rounded-[40px] shadow-[rgba(0,0,0,0.1)_8px_8px_32px] p-16 mb-16 border border-white/50 w-full flex flex-col items-center">
+            <p className="text-xl font-semibold text-gray-700 mb-10">
+              우리가 가게 될 여행지는?
+            </p>
+            <RandomTripButton loading={loading} onClick={handleStartTrip} />
+          </div>
+
+          {/* 결과 */}
+          {tripInfo && (
+            <TripResultCard tripInfo={tripInfo} />
+          )}
+
         </div>
-      )}
+      </div>
     </div>
   );
 };

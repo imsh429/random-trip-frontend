@@ -1,28 +1,31 @@
-// src/pages/Dashboard.tsx
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import DashboardHeader from '../components/dashboard/DashboardHeader';
+import WeatherWidget from '../components/dashboard/WeatherWidget';
 
 const Dashboard: React.FC = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="p-6 text-center">
-      <h1 className="text-3xl font-bold mb-8">랜덤 여행 생성기 대시보드</h1>
-      <div className="flex justify-center gap-4">
-        <button
-          onClick={() => navigate("/trip/random")}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded"
-        >
-          랜덤 여행지 뽑기
-        </button>
-        <button
-          onClick={() => navigate("/trip/plan")}
-          className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded"
-        >
-          여행 경로 생성
-        </button>
-        {/* 더 많은 버튼들 */}
+    <div className="min-h-screen w-screen bg-gradient-to-br from-[#fdfbfb] to-[#ebedee] flex flex-col items-center font-['Nunito']">
+
+      <div className="w-full max-w-[1400px] px-8 py-16">
+        <DashboardHeader />
+
+        <div className="flex flex-col lg:flex-row gap-10 mt-16">
+
+          {/* 날씨 위젯 (왼쪽 박스) */}
+          <div className="flex-1 bg-white rounded-[40px] shadow-[rgba(0,0,0,0.1)_8px_8px_32px] p-10 border border-white/50">
+            <WeatherWidget />
+          </div>
+
+          {/* 여행 경로/방문 기록 (오른쪽 박스) */}
+          <div className="flex-1 bg-white rounded-[40px] shadow-[rgba(0,0,0,0.1)_8px_8px_32px] p-10 border border-white/50 min-h-[600px] flex justify-center items-center">
+            <p className="text-xl text-gray-500 text-center">
+              추후 여기에 여행 경로, 방문 기록 등 추가 예정
+            </p>
+          </div>
+
+        </div>
       </div>
+
     </div>
   );
 };

@@ -1,30 +1,49 @@
-//앱 진입점
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+import { AnimatePresence, motion } from 'framer-motion';
 
-import LoginButton from './components/LoginButton';
+import LoginPage from './pages/LoginPage';
 import LoginRedirect from './pages/LoginRedirect';
-import Dashboard from './pages/Dashboard'; // ✅ 메인 대시보드
-import RandomTripPage from './pages/RandomTripPage'; // ✅ 여행지 추천 페이지
-import RandomTripPlanPage from './pages/RandomTripPlanPage'; // ✅ 여행지 추천 페이지
+import Dashboard from './pages/Dashboard';
+import RandomTripPage from './pages/RandomTripPage';
+import RandomTripPlanPage from './pages/RandomTripPlanPage';
+
+const AnimatedRoutes: React.FC = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><LoginPage /></PageTransition>} />
+        <Route path="/oauth/callback/kakao" element={<PageTransition><LoginRedirect /></PageTransition>} />
+        <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
+        <Route path="/trip/random" element={<PageTransition><RandomTripPage /></PageTransition>} />
+        <Route path="/trip/plan" element={<PageTransition><RandomTripPlanPage /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
+
+const PageTransition: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+  >
+    {children}
+  </motion.div>
+);
 
 const App: React.FC = () => {
   return (
     <RecoilRoot>
       <Router>
-        <Routes>
-          <Route path="/" element={<LoginButton />} />
-          <Route path="/oauth/callback/kakao" element={<LoginRedirect />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/trip/random" element={<RandomTripPage />} />
-          <Route path="/trip/plan" element={<RandomTripPlanPage />} />
-        </Routes>
+        <AnimatedRoutes />
       </Router>
     </RecoilRoot>
   );
 };
 
 export default App;
-
-

@@ -13,7 +13,7 @@ type TripSpot = {
 const RandomTripPlanPage: React.FC = () => {
   const [region, setRegion] = useState('');
   const [mood, setMood] = useState('healing');
-  const [spots, setSpots] = useState<TripSpot[]>([]);
+  const [_spots, setSpots] = useState<TripSpot[]>([]);
   const [map, setMap] = useState<naver.maps.Map | null>(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const RandomTripPlanPage: React.FC = () => {
 
   const handlePlan = async () => {
     try {
-      const res = await axios.post('http://localhost:8080/trip/plan', {
+      const res = await axios.post('http://113.198.66.75:10072/trip/plan', {
         mood,
         region,
       });
