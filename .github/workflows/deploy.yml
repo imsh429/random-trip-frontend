@@ -1,0 +1,48 @@
+name: Frontend Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Github Repository 파일 불러오기 
+        uses: actions/checkout@v4
+
+      - name: Node.js 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: .env.production 파일 만들기
+        run: echo "${{ secrets.FRONTEND_ENV_PROD }}" > .env.production
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: 빌드된 파일 업로드하기
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.JCLOUD_HOST }}
+          username: ubuntu
+          key: ${{ secrets.JCLOUD_SSH_KEY }}
+          port: 19072
+          source: "dist/*"
+          target: "/home/ubuntu/frontend"
+
+      - name: Restart nginx
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.JCLOUD_HOST }}
+          username: ubuntu
+          key: ${{ secrets.JCLOUD_SSH_KEY }}
+          port: 19072
+          script: |
+            set -e
+            sudo systemctl restart nginx
