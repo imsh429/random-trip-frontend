@@ -44,8 +44,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.JCLOUD_SSH_KEY }}
           port: 19072
-          source: "dist/*"
-          target: "/home/ubuntu/frontend/dist"
+          source: "dist"
+          target: "/home/ubuntu/frontend"
 
       - name: 퍼미션 조정
         uses: appleboy/ssh-action@v1.0.3
