@@ -29,6 +29,7 @@ const LoginRedirect: React.FC = () => {
 
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
+          localStorage.setItem('nickname', nickname);
           setAuth({ isLoggedIn: true, nickname });
 
           navigate('/dashboard');
