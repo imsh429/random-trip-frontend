@@ -34,7 +34,22 @@ jobs:
           key: ${{ secrets.JCLOUD_SSH_KEY }}
           port: 19072
           source: "dist/*"
-          target: "/home/ubuntu/frontend"
+          target: "/home/ubuntu/frontend/dist"
+
+      - name: 퍼미션 조정
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.JCLOUD_HOST }}
+          username: ubuntu
+          key: ${{ secrets.JCLOUD_SSH_KEY }}
+          port: 19072
+          script: |
+            set -e
+            sudo chmod +x /home
+            sudo chmod +x /home/ubuntu
+            sudo chmod +x /home/ubuntu/frontend
+            sudo chown -R www-data:www-data /home/ubuntu/frontend/dist
+            sudo chmod -R 755 /home/ubuntu/frontend/dist
 
       - name: Restart nginx
         uses: appleboy/ssh-action@v1.0.3
