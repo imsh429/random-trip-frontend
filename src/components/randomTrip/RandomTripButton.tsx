@@ -10,7 +10,7 @@ const RandomTripButton: React.FC<RandomTripButtonProps> = ({ loading, onClick })
     <button
       onClick={onClick}
       className="bg-yellow-300 hover:bg-yellow-400 text-black rounded-3xl px-10 py-5 text-2xl font-extrabold shadow-lg transition-all duration-300"
-      disabled={loading}  // 추천중일 때 중복 클릭 방지
+      disabled={loading}  
     >
       {loading ? "추천 중..." : "여행지 추천 받기"}
     </button>
