@@ -1,5 +1,5 @@
 // 카카오 로그인 후 redirect 페이지 url에서 code추출
-// -> 백엔드에 요청 보내 jwt 받아서 저장
+// -> 백엔드에 요청 보내 jwt 받아서 저장/
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
