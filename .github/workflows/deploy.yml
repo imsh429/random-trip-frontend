@@ -26,6 +26,17 @@ jobs:
       - name: Build frontend
         run: npm run build
 
+      - name: 기존 dist 폴더 삭제
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.JCLOUD_HOST }}
+          username: ubuntu
+          key: ${{ secrets.JCLOUD_SSH_KEY }}
+          port: 19072
+          script: |
+            set -e
+            rm -rf /home/ubuntu/frontend/dist
+
       - name: 빌드된 파일 업로드하기
         uses: appleboy/scp-action@v0.1.7
         with:
