@@ -11,52 +11,51 @@ const TripPlannerChatBot: React.FC = () => {
     "어디로 여행 가고 싶으신가요? 지역을 입력해주세요."
   ]);
   const [input, setInput] = useState("");
-  const [region, setRegion] = useState<string>("");
-  const [mood, setMood] = useState<string>("");
-  const [spots, setSpots] = useState<TripSpot[]>([]);
   const [stage, setStage] = useState<"askRegion" | "askMood" | "showResult">("askRegion");
   const [loading, setLoading] = useState(false);
+  const [context, setContext] = useState<{ region?: string, mood?: string }>({});
 
   const handleUserInput = async () => {
     if (!input.trim()) return;
-
-    const newMessages = [...messages, `🙋‍♂️ ${input}`];
+    const userMessage = `🙋‍♂️ ${input}`;
+    const newMessages = [...messages, userMessage];
 
     if (stage === "askRegion") {
-      setRegion(input);
+      setContext(prev => ({ ...prev, region: input }));
       setMessages([...newMessages, "어떤 분위기의 여행을 원하시나요? (힐링 / 모험 / 맛집)"]);
       setStage("askMood");
-    } else if (stage === "askMood") {
-      setMood(input);
+      setInput("");
+      return;
+    }
+
+    if (stage === "askMood") {
+      setContext(prev => ({ ...prev, mood: input }));
       setMessages([...newMessages, "잠시만요! AI가 여행지를 추천 중입니다..."]);
       setStage("showResult");
       setLoading(true);
+      setInput("");
 
       try {
         const res = await axios.post("http://113.198.66.75:10072/trip/plan", {
-          region,
+          region: context.region,
           mood: input
         });
 
         const route: TripSpot[] = res.data.route;
-        setSpots(route);
-
         const resultMessages = [
           ...newMessages,
           "🗺 추천된 여행지 목록입니다:",
           ...route.map(spot => `📍 ${spot.name}: ${spot.description}`)
         ];
-
         setMessages(resultMessages);
       } catch (err) {
         console.error(err);
         setMessages([...newMessages, "❌ 추천에 실패했습니다. 다시 시도해주세요."]);
         setStage("askRegion");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
-
-    setInput("");
   };
 
   return (
