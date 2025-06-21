@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import SpotMap from "../components/bestplan/SpotMap";
 import StartLocationSelector from "../components/bestplan/StartLocationSelector";
