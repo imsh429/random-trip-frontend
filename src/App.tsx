@@ -8,7 +8,7 @@ import LoginRedirect from './pages/LoginRedirect';
 import Dashboard from './pages/Dashboard';
 import RandomTripPage from './pages/RandomTripPage';
 import RandomTripPlanPage from './pages/RandomTripPlanPage';
-
+import BestPlanPage from './pages/BestPlanPage';
 const AnimatedRoutes: React.FC = () => {
   const location = useLocation();
 
@@ -20,6 +20,7 @@ const AnimatedRoutes: React.FC = () => {
         <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
         <Route path="/trip/random" element={<PageTransition><RandomTripPage /></PageTransition>} />
         <Route path="/trip/plan" element={<PageTransition><RandomTripPlanPage /></PageTransition>} />
+        <Route path="/trip/bestplan" element={<PageTransition><BestPlanPage></BestPlanPage></PageTransition>} />
       </Routes>
     </AnimatePresence>
   );
