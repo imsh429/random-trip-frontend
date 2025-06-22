@@ -28,7 +28,7 @@ const TripPlannerChatBot: React.FC = () => {
 
     if (stage === "askRegion") {
       setContext((prev) => ({ ...prev, region: input }));
-      setMessages([...newMessages, "어떤 분위기의 여행을 원하시나요? (힐링 / 모험 / 맛집 등 입력)"]);
+      setMessages([...newMessages, "어떤 분위기의 여행을 원하시나요? (20대가 많이 가는 맛집 포함한 데이트코스 추천해줘)"]);
       setStage("askMood");
       setInput("");
       return;
@@ -163,7 +163,7 @@ const TripPlannerChatBot: React.FC = () => {
             className="border rounded-xl px-4 py-2 w-full text-lg shadow-inner mb-3"
             value={refineInput}
             onChange={(e) => setRefineInput(e.target.value)}
-            placeholder="보완 요청 입력 (예: 놀이공원 포함)"
+            placeholder="보완 요청 입력 (예: 놀이공원 포함해줘)"
           />
           <button
             onClick={handleRefine}
