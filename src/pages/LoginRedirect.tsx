@@ -21,8 +21,8 @@ const LoginRedirect: React.FC = () => {
 
       const getTokens = async (code: string) => {
         try {
-          //TODO : `http://localhost:8080/oauth/callback/kakao?code=${code}`
-          const res = await axios.get(`http://113.198.66.75:10072/oauth/callback/kakao?code=${code}`, {
+          //TODO : `http://113.198.66.75:10072/oauth/callback/kakao?code=${code}`
+          const res = await axios.get(`http://localhost:8080/oauth/callback/kakao?code=${code}`, {
             withCredentials: true,
           });
 

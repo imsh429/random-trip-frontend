@@ -8,10 +8,20 @@ declare global {
       class Map {
         constructor(container: HTMLElement, options: any);
         setCenter(latlng: LatLng): void;
+        setBounds(bounds: LatLngBounds, padding?: number): void; // ✅ 추가
       }
 
       class LatLng {
         constructor(lat: number, lng: number);
+      }
+
+      class LatLngBounds {
+        extend(latlng: LatLng): void;
+      }
+
+      class Polyline {
+        constructor(options: any);
+        setMap(map: Map | null): void;
       }
 
       class Marker {
@@ -20,7 +30,7 @@ declare global {
       }
 
       class MarkerImage {
-        constructor(src: string, size: Size);
+        constructor(src: string, size: Size, options?: any);
       }
 
       class Size {
