@@ -10,11 +10,11 @@ const LoginPage: React.FC = () => {
         <div className="text-9xl mb-16 animate-fade-in-down delay-100">🌍</div>
 
         <h1 className="text-6xl font-extrabold mb-10 text-gray-800 drop-shadow-sm animate-fade-in-down delay-300">
-          P를 위한 랜덤 여행 생성기
+          P를 위한 랜덤 여행 플래너
         </h1>
 
         <p className="text-2xl text-gray-600 mb-20 text-center leading-relaxed animate-fade-in-down delay-500">
-          여행은 가고싶은데.. 어디로 가지? <br /> 고민중독에 빠진 당신을 위한 여행맞춤 플래너!
+          여행은 가고싶은데.. 어디로 가지? <br /> 고민중독에 빠진 당신을 위한 랜덤 여행 생성기!
         </p>
 
         <div className="w-full max-w-[500px] animate-fade-in-down delay-700">
