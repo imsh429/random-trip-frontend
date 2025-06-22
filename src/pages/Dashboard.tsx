@@ -1,6 +1,7 @@
 import React from 'react';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import WeatherWidget from '../components/dashboard/WeatherWidget';
+import RecentTrip from '../components/dashboard/RecentTrip';
 
 const Dashboard: React.FC = () => {
   return (
@@ -17,10 +18,8 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* 여행 경로/방문 기록 (오른쪽 박스) */}
-          <div className="flex-1 bg-white rounded-[40px] shadow-[rgba(0,0,0,0.1)_8px_8px_32px] p-10 border border-white/50 min-h-[600px] flex justify-center items-center">
-            <p className="text-xl text-gray-500 text-center">
-              추후 여기에 여행 경로, 방문 기록 등 추가 예정
-            </p>
+          <div className="flex-1 bg-white rounded-[40px] shadow-[rgba(0,0,0,0.1)_8px_8px_32px] p-10 border border-white/50">
+            <RecentTrip />
           </div>
 
         </div>

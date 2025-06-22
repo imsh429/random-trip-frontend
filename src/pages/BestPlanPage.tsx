@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import SpotMap from "../components/bestplan/SpotMap";
@@ -33,15 +33,26 @@ const BestPlanPage = () => {
   const [polyline, setPolyline] = useState<{ lat: number; lng: number }[]>([]);
   const [sectionInfo, setSectionInfo] = useState<SectionInfo[]>([]);
 
+  // 디버깅용: polyline 변경 시 출력
+  useEffect(() => {
+    console.log("✅ polyline 상태 업데이트됨:", polyline);
+  }, [polyline]);
+
   const handleSubmitPlan = async () => {
     if (!confirmedStart || confirmedSpots.length === 0) {
       alert("출발지와 최소 1개의 여행지를 설정해주세요.");
       return;
     }
+
     const token = localStorage.getItem("accessToken");
+    console.log("📤 axios 요청 직전 데이터:", {
+      start: confirmedStart,
+      spots: confirmedSpots,
+    });
+
     try {
       const res = await axios.post(
-        "http://localhost:8080/trip/confirm",
+        "http://113.198.66.75:10072/trip/confirm",
         {
           start: confirmedStart,
           spots: confirmedSpots,
@@ -53,16 +64,13 @@ const BestPlanPage = () => {
         }
       );
 
-      console.log("보낸 데이터:", {
-        start: confirmedStart,
-        spots: confirmedSpots,
-      });
-      console.log("경로 응답:", res.data);
+      console.log("✅ 받은 응답:", res.data);
+      console.log("🗺 polyline 길이:", res.data.polyline?.length);
 
-      setPolyline(res.data.polyline || []);
-      setSectionInfo(res.data.sections || []);
+      setPolyline(Array.isArray(res.data.polyline) ? res.data.polyline : []);
+      setSectionInfo(Array.isArray(res.data.sections) ? res.data.sections : []);
     } catch (err) {
-      console.error("경로 생성 실패", err);
+      console.error("❌ 경로 생성 실패", err);
       alert("경로 생성 중 문제가 발생했습니다.");
     }
   };
