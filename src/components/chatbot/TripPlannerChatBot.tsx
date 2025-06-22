@@ -75,9 +75,9 @@ const TripPlannerChatBot: React.FC = () => {
           ...currentMessages,
           filteredSpots.length > 0
             ? isInitial
-              ? "🗽 추천된 여행지입니다:"
-              : "🌟 추가로 추천된 여행지:"
-            : "⚠️ 이미 추천된 장소와 중복되어 새로운 여행지가 없습니다.",
+              ? "추천된 여행지입니다:"
+              : "추가로 추천된 여행지:"
+            : "이미 추천된 장소와 중복되어 새로운 여행지가 없습니다.",
           ...filteredSpots.map((spot) => `📍 ${spot.name}: ${spot.description}`)
         ]);
 
@@ -85,7 +85,7 @@ const TripPlannerChatBot: React.FC = () => {
       });
     } catch (err) {
       console.error(err);
-      setMessages([...currentMessages, "❌ 추천에 실패했습니다. 다시 시도해주세요."]);
+      setMessages([...currentMessages, "추천에 실패했습니다. 다시 시도해주세요."]);
     } finally {
       setLoading(false);
     }
@@ -190,7 +190,7 @@ const TripPlannerChatBot: React.FC = () => {
             onClick={resetAll}
             className="mt-4 w-full bg-red-400 hover:bg-red-500 text-white py-3 rounded-xl font-bold text-lg shadow-md"
             >
-            🔄 여행 추천 초기화
+            여행 추천 초기화
         </button>
       </div>
     </div>
